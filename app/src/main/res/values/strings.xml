@@ -2,5 +2,15 @@
     <string name="app_name">GymLoger</string>
     <string name="title_home">Home</string>
     <string name="title_wifi">Wifi</string>
-    <string name="title_map">Map</string>
+    <string name="title_about">About</string>
+    <string name="about_fragment_title">Gym Logger</string>
+    <string name="about_fragment_description">
+        Gym Logger is an android application used to track how much time
+        someone is actually at the gym. To do so it uses standard wifi Connection
+        to determine if you are actually at the gym and it uses gyroscope data to
+        determine if you are actually working out.
+    </string>
+    <string name="about_fragment_github_link" >
+        Github: https://github.com/mailoalex/GymLogger
+    </string>
 </resources>

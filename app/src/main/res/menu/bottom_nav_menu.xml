@@ -7,13 +7,12 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_map"
-        android:icon="@drawable/baseline_add_location_24"
-        android:title="@string/title_map" />
-
-    <item
         android:id="@+id/navigation_wifi"
         android:icon="@drawable/wifi"
         android:title="@string/title_wifi" />
+    <item
+        android:id="@+id/navigation_about"
+        android:icon="@android:drawable/ic_dialog_info"
+        android:title="@string/title_about" />
 
 </menu>

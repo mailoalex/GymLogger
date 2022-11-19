@@ -7,18 +7,18 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.gymloger.ui.home.HomeFragment"
+        android:name="com.example.gymloger.ui.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_map"
-        android:name="com.example.gymloger.ui.map.MapFragment"
-        android:label="@string/title_map" />
-
-    <fragment
         android:id="@+id/navigation_wifi"
-        android:name="com.example.gymloger.ui.wifi.WifiFragment"
+        android:name="com.example.gymloger.ui.WifiFragment"
         android:label="@string/title_wifi"
         tools:layout="@layout/fragment_wifi" />
+    <fragment
+        android:id="@+id/navigation_about"
+        android:name="com.example.gymloger.ui.AboutFragment"
+        tools:layout="@layout/fragment_about"
+        android:label="@string/title_about" />
 </navigation>
