@@ -1,5 +1,7 @@
 package com.example.gymloger
 
+import android.content.Context
+import android.net.wifi.WifiManager
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity

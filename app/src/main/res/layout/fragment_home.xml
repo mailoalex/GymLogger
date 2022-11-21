@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="20dp"
     tools:context=".ui.HomeFragment">
@@ -11,39 +11,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:background="@drawable/box"
-        android:padding="10dp"
-        android:elevation="20dp"
         android:layout_gravity="center"
+        android:background="@drawable/box"
+        android:elevation="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
 
         >
 
         <ImageView
             android:id="@+id/imageView2"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
+            android:layout_width="41dp"
+            android:layout_height="41dp"
             android:layout_gravity="center"
             android:layout_weight="1"
 
-            android:src="@drawable/wifi" />
+            android:src="@drawable/wifi"
+            app:srcCompat="@android:drawable/ic_popup_reminder" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/wifi_text"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:gravity="center"
             android:text="HELLO THIS IS THE STATUS CONNECTION"
-            />
+            android:textSize="18sp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:orientation="horizontal"
-        android:background="@drawable/box"
-        android:padding="10dp"
-        android:elevation="20dp"
         android:layout_gravity="center"
         android:layout_marginTop="20dp"
+        android:background="@drawable/box"
+        android:elevation="20dp"
+        android:orientation="horizontal"
+        android:padding="10dp"
 
         >
 
@@ -56,9 +59,68 @@
             app:srcCompat="@android:drawable/ic_lock_idle_alarm" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="HELLO THIS IS THE LAST WORKOUT TIME" />
+            android:text="CURRENT TIME"
+            android:textSize="18sp" />
     </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/box"
+        android:elevation="20dp"
+        android:orientation="horizontal"
+
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imageView4"
+            android:layout_width="162dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:textSize="18sp"
+            app:srcCompat="@android:drawable/btn_star" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:text="NUMBER OF WORKOUTS" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:background="@drawable/box"
+        android:elevation="20dp"
+        android:orientation="horizontal"
+
+        android:padding="10dp">
+
+        <ImageView
+            android:id="@+id/imageView5"
+            android:layout_width="162dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+        <TextView
+            android:layout_width="300dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text=" LAST WORKOUT TIME"
+            android:textSize="18sp" />
+    </LinearLayout>
+
 </LinearLayout>
