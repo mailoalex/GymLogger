@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
-        android:layout_height="208dp"
+        android:layout_height="264dp"
         android:layout_weight="1"
         android:fontFamily="sans-serif"
         android:lineSpacingExtra="4sp"
@@ -28,8 +28,8 @@
 
     <TextView
         android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="475dp"
+        android:layout_width="377dp"
+        android:layout_height="321dp"
         android:autoLink="web"
         android:fontFamily="sans-serif"
         android:text="@string/about_fragment_github_link" />
