@@ -26,10 +26,6 @@ class ActivityMainViewModel : ViewModel() {
         currentTime.postValue(Timestamp( System.currentTimeMillis()))
     }
 
-
-
-
-
     fun timeDifference(): Long{
         return currentTime.value!!.time - startedWorkingOutTime.value!!.time  ;
     }

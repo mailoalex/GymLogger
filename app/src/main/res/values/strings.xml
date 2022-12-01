@@ -8,7 +8,8 @@
         Gym Logger is an android application used to track how much time
         someone is actually at the gym. To do so it uses standard wifi Connection
         to determine if you are actually at the gym and it uses accelerometer data to
-        determine if you are actually working out.
+        determine if you are actually working out. If the accelerometer detects more than
+        5 in the one of the x,y,z coordinates it will determine that as if you were working out.
     </string>
     <string name="about_fragment_github_link" >
         Github: https://github.com/mailoalex/GymLogger

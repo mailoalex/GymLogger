@@ -1,8 +1,22 @@
 package com.example.gymloger
 
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
+import android.net.wifi.WifiInfo
+import android.net.wifi.WifiManager
+import android.os.Build
 import android.os.Bundle
 import android.text.format.Time
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -15,10 +29,13 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class MainActivity : AppCompatActivity() {
-
+class MainActivity : AppCompatActivity(), SensorEventListener {
+    private lateinit var  connManager: ConnectivityManager
+    private lateinit var networkCallback: ConnectivityManager.NetworkCallback
     private lateinit var binding: ActivityMainBinding
     private val viewmodel: ActivityMainViewModel by viewModels()
+    private  lateinit var  _sensorManager: SensorManager
+    private lateinit var wifi: WifiManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +55,46 @@ class MainActivity : AppCompatActivity() {
                 viewmodel.startedWorkingOutTime.postValue( Timestamp(System.currentTimeMillis()))
             }
         })
+        val request = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .build()
 
+
+        connManager = this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager;
+
+
+        networkCallback = object : ConnectivityManager.NetworkCallback(
+            FLAG_INCLUDE_LOCATION_INFO
+        ) {
+            @RequiresApi(Build.VERSION_CODES.Q)
+            override fun onCapabilitiesChanged(
+                network: Network,
+                networkCapabilities: NetworkCapabilities
+            ) {
+                super.onCapabilitiesChanged(network, networkCapabilities)
+                val wifiInfo = networkCapabilities.transportInfo as WifiInfo
+                val ssid = wifiInfo.ssid;
+                var textSsid = "NO CONNECTION"
+                if (ssid != "<unknown ssid>"){
+                    textSsid = "Connected to $ssid";
+                }else{
+
+                }
+                viewmodel.isConnectedToWifi.postValue(ssid != "<unknown ssid>")
+            }
+        }
+        connManager.registerNetworkCallback(request, networkCallback)
+        _sensorManager = this.getSystemService(Context.SENSOR_SERVICE) as SensorManager
+
+        _sensorManager.getDefaultSensor( Sensor.TYPE_LINEAR_ACCELERATION)?.also {
+            _sensorManager.registerListener(
+                this,
+                it,
+                SensorManager.SENSOR_STATUS_ACCURACY_LOW,
+                SensorManager.SENSOR_DELAY_FASTEST
+
+            )
+        }
         val navView: BottomNavigationView = binding.navView
 
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
@@ -49,6 +105,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_about, R.id.navigation_wifi
             )
         )
+        loadData()
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
@@ -82,5 +140,13 @@ class MainActivity : AppCompatActivity() {
         if ( numWorkouts != -1){
             viewmodel.numberOfWorkouts.postValue(numWorkouts )
         }
+    }
+    override fun onSensorChanged(p0: SensorEvent?) {
+        viewmodel.accelerometerData.postValue(p0!!.values.toMutableList())
+        viewmodel.isAccelerometerActive.postValue(p0.values[0] >=5 || p0.values[1] >=5 || p0.values[2] >=5)
+    }
+
+    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
+//        textGyro.text = String.format("accuracy %d, data %s", p0!!.accuracy, p0.values.joinToString() )
     }
 }

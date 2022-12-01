@@ -28,17 +28,17 @@ import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 
-class WifiFragment : Fragment(), SensorEventListener {
+class WifiFragment : Fragment() {
 
     private var _binding: FragmentWifiBinding? = null
 
 
     private val binding get() = _binding!!
-    private  lateinit var  _sensorManager: SensorManager
     private lateinit var wifi: WifiManager
     private lateinit var  connManager: ConnectivityManager
     private lateinit var networkCallback: NetworkCallback
     private val viewModel: ActivityMainViewModel by activityViewModels()
+
     private fun  saveData(numWorkouts: Int, lastWorkout: Date){
         val settings = requireContext().getSharedPreferences("gymLoggerData", 0)
         val editor = settings.edit()
@@ -50,6 +50,7 @@ class WifiFragment : Fragment(), SensorEventListener {
     }
     private fun stopWorkout(){
         viewModel.reset()
+        viewModel.numberOfWorkouts.postValue(viewModel.numberOfWorkouts.value!! + 1)
         saveData(viewModel.numberOfWorkouts.value!!, viewModel.lastWorkout.value!!)
     }
     override fun onCreateView(
@@ -107,22 +108,10 @@ class WifiFragment : Fragment(), SensorEventListener {
 
         val root: View = binding.root
 
-        _sensorManager = context?.getSystemService(Context.SENSOR_SERVICE) as SensorManager
-
-        _sensorManager.getDefaultSensor( Sensor.TYPE_LINEAR_ACCELERATION)?.also {
-            _sensorManager.registerListener(
-                this,
-                it,
-                SensorManager.SENSOR_STATUS_ACCURACY_LOW,
-                SensorManager.SENSOR_DELAY_NORMAL
-
-                )
-        }
 
         binding.stopWorkoutButton.setOnClickListener {
             stopWorkout()
         }
-
 
         return root
     }
@@ -130,18 +119,10 @@ class WifiFragment : Fragment(), SensorEventListener {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        _sensorManager.unregisterListener(this)
         connManager.unregisterNetworkCallback(networkCallback)
 
     }
 
-    override fun onSensorChanged(p0: SensorEvent?) {
-        viewModel.accelerometerData.postValue(p0!!.values.toMutableList())
-        viewModel.isAccelerometerActive.postValue(p0.values[0] >=5 || p0.values[1] >=5 || p0.values[2] >=5)
-    }
 
-    override fun onAccuracyChanged(p0: Sensor?, p1: Int) {
-//        textGyro.text = String.format("accuracy %d, data %s", p0!!.accuracy, p0.values.joinToString() )
-    }
 
 }
